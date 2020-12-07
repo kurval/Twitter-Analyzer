@@ -19,9 +19,11 @@ def get_request_token():
 def get_oauth_verifier(request_token):
     # Ask the user to authorize our app and give us the pin code
     print("Go to the following site in your browser:")
-    print(f"{constants.AUTHORIZATION_URL}?oauth_token={request_token['oauth_token']}")
-
+    print(get_oauth_verifier_url(request_token))
     return input("What is the PIN? ")
+
+def get_oauth_verifier_url(request_token):
+    return f"{constants.AUTHORIZATION_URL}?oauth_token={request_token['oauth_token']}"
 
 def get_access_token(request_token, oauth_verifier):
     # Create a Token object which constains the request token, and the verifier
