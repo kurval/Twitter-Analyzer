@@ -1,61 +1,31 @@
-import constants
-import oauth2
-import urllib.parse as urlparse
-import json
+#!/usr/bin/python3
 from user import User
 from database import Database
+from twitter_utils import get_request_token, get_oauth_verifier, get_access_token
 
-Database.initialise(database="learning", host="localhost", user="postgres", password="filsu90")
 
-# Create a consumer, which uses CONSUMER_KEY and CONSUMER_SECRET to identify our app uniquely
-consumer = oauth2.Consumer(constants.CONSUMER_KEY, constants.CONSUMER_SECRET)
-client = oauth2.Client(consumer)
+def main():
+    Database.initialise(database="learning", host="localhost", user="postgres", password="filsu90")
 
-# Use the client to perform a request for the request token
-response, content = client.request(constants.REQUEST_TOKEN_URL, 'POST')
-if response.status != 200:
-    print("An error occured gettin the request token from Twitter! ")
+    user_email = input("Enter your email: ")
+    user = User.load_data(user_email)
+    if not user:
+        request_token = get_request_token()
 
-# Get the request token by parsing the query string returned
-request_token = dict(urlparse.parse_qsl(content.decode('utf-8')))
+        oauth2_verifier = get_oauth_verifier(request_token)
 
-# Ask the user to authorize our app and give us the pin code
-print("Go to the following site in your browser:")
-print(f"{constants.AUTHORIZATION_URL}?oauth_token={request_token['oauth_token']}")
+        access_token = get_access_token(request_token, oauth2_verifier)
 
-oauth2_verifier = input("What is the PIN? ")
+        first_name = input("Enter you first name: ")
+        last_name = input("Enter your last name ")
 
-# Create a Token object which constains the request token, and the verifier
-token = oauth2.Token(request_token['oauth_token'], request_token['oauth_token_secret'])
-token.set_verifier(oauth2_verifier)
+        user = User(user_email, first_name, last_name, access_token['oauth_token'], access_token['oauth_token_secret'], None)
+        user.save_to_db()
 
-# Create a client with our consumer (our app) and the newly created (and verified) token
-client = oauth2.Client(consumer, token)
+    tweets = user.twitter_request('https://api.twitter.com/1.1/search/tweets.json?q=from%3ArealDonaldTrump')
 
-# Ask Twitter for an access token, and Twitter knows it should give us it because we've verified request token
-response, content = client.request(constants.ACCES_TOKEN_URL, 'POST')
-access_token = dict(urlparse.parse_qsl(content.decode('utf-8')))
+    for tweet in tweets['statuses']:
+        print(tweet['text'])
 
-print(access_token)
-
-email = input("Enter your email: ")
-first_name = input("Enter you first name: ")
-last_name = input("Enter your last name ")
-
-user = User(email, first_name, last_name, access_token['oauth_token'], access_token['oauth_token_secret'], None)
-user.save_to_db()
-
-# Create an 'authorized_token' Token object and use that to perform Twitter API calls on behalf of the user
-authorized_token = oauth2.Token(access_token['oauth_token'], access_token['oauth_token_secret'])
-authorized_client = oauth2.Client(consumer, authorized_token)
-
-# Make Twitter API calls!
-response, content = authorized_client.request('https://api.twitter.com/1.1/search/tweets.json?q=computers+filter:images', 'GET')
-
-if response.status != 200:
-    print("An error occured when searching!")
-
-tweets = json.loads(content.decode('utf-8'))
-
-for tweet in tweets['statuses']:
-    print(tweet['text'])
+if __name__ == "__main__":
+    main()
