@@ -20,7 +20,10 @@
                 {% elif element['label'] == 'pos' %}
                     {% set css_class = 'list-group-item-success' %}
                 {% endif %}
-                <li class="list-group-item {{ css_class }}">{{ element['tweet'] }}</li>
+                <a href="{{ element['url'] }}" class="list-group-item list-group-item-action {{ css_class }}" target="_blank">
+                    @{{ element['name'] }} :<br>
+                    {{ element['tweet'] }}
+                </a>
             {% endfor %}
         </ul>
     </div>

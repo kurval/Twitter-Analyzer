@@ -57,7 +57,13 @@ def results():
     if not query:
         return redirect(url_for('search'))
     tweets = g.user.twitter_request(f'https://api.twitter.com/1.1/search/tweets.json?q={query}')
-    tweet_list = [{'tweet' : tweet['text'], 'label' : 'neutral'} for tweet in tweets['statuses']]
+    tweet_list = [{'tweet' : tweet['text'],
+                    'name' : tweet['user']['screen_name'],
+                    'time' : tweet['created_at'],
+                    'id' : tweet['id_str'],
+                    'url' : 'https://twitter.com/' +  tweet['user']['screen_name'] + '/status/' + tweet['id_str'],
+                    'label' : 'neutral'} 
+                    for tweet in tweets['statuses']]
 
     for tweet in tweet_list:
         response = requests.post('http://text-processing.com/api/sentiment/', data={'text': tweet['tweet']})
