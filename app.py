@@ -2,6 +2,7 @@ from flask import Flask, render_template, session, redirect, request, url_for, g
 from user import User
 from database import Database
 import requests
+import urllib.parse
 from twitter_utils import get_request_token, get_oauth_verifier_url, get_access_token
 
 app = Flask(__name__)
@@ -56,7 +57,7 @@ def results():
     query = request.args.get('q')
     if not query:
         return redirect(url_for('search'))
-    tweets = g.user.twitter_request(f'https://api.twitter.com/1.1/search/tweets.json?q={query}')
+    tweets = g.user.twitter_request(f'https://api.twitter.com/1.1/search/tweets.json?q={urllib.parse.quote_plus(query)}')
     tweet_list = [{'tweet' : tweet['text'],
                     'name' : tweet['user']['screen_name'],
                     'time' : tweet['created_at'],
