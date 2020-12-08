@@ -21,7 +21,7 @@
                     {% set css_class = 'list-group-item-success' %}
                 {% endif %}
                 <a href="{{ element['url'] }}" class="list-group-item list-group-item-action {{ css_class }}" target="_blank">
-                    @{{ element['name'] }} :<br>
+                    <b>@{{ element['name'] }}</b><br>
                     {{ element['tweet'] }}
                 </a>
             {% endfor %}
