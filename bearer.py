@@ -5,7 +5,6 @@ import requests
 import json
 
 OAUTH2_TOKEN = 'https://api.twitter.com/oauth2/token'
-RESOURCE_URL = 'https://api.twitter.com/1.1/search/tweets.json'
 
 def get_bearer_token(consumer_key, consumer_secret):
     # enconde consumer key
@@ -25,9 +24,9 @@ def get_bearer_token(consumer_key, consumer_secret):
     to_json = response.json()
     # print("token_type = %s\naccess_token  = %s" % (to_json['token_type'], to_json['access_token']))
 
-def twitter_request_bearer():
+def twitter_request_bearer(query):
     headers = {
         "Authorization": "Bearer " + constants.BEARER}
-    content = requests.get(f"{RESOURCE_URL}" + "?q=cars", headers=headers)
+    content = requests.get(f"{constants.SEARCH_URL}?q={query}", headers=headers)
     return json.loads(content.text)
 

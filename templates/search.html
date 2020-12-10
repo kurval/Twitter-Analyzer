@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <title>User profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Search</title>
 </head>
 
 <body>
+    {% for category, message in get_flashed_messages(with_categories=True) %}
+        <div class="alert alert-{{category}}">Error: {{ message }}</div>
+    {% endfor %}
     <a href="{{ url_for('logout') }}">Logout</a><br>
     {{ user.screen_name }}
     <form action="{{ url_for('results') }}">

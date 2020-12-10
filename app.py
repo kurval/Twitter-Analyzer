@@ -1,9 +1,9 @@
-from flask import Flask, render_template, session, redirect, request, url_for, g
+from flask import Flask, render_template, session, redirect, request, url_for, g, flash
 from user import User
 from database import Database
 import requests
 import urllib.parse
-from twitter_utils import get_request_token, get_oauth_verifier_url, get_access_token
+from twitter_utils import get_request_token, get_oauth_verifier_url, get_access_token, get_tweets_by_user
 from bearer import twitter_request_bearer
 import ssl
 
@@ -48,6 +48,8 @@ def twitter_auth():
 
 @app.route("/")
 def homepage():
+    flash("Good", "info")
+    flash("Not good", "error")
     return render_template('login.html')
 
 @app.route("/search")
@@ -62,9 +64,9 @@ def results():
     if not query:
         return redirect(url_for('search'))
     if 'screen_name' in session:
-        tweets = g.user.twitter_request(f'https://api.twitter.com/1.1/search/tweets.json?q={urllib.parse.quote_plus(query)}')
+        tweets = get_tweets_by_user(g.user, query)
     else:
-        tweets = twitter_request_bearer()
+        tweets = twitter_request_bearer(query)
     tweet_list = [{'tweet' : tweet['text'],
                     'name' : tweet['user']['screen_name'],
                     'time' : tweet['created_at'],
