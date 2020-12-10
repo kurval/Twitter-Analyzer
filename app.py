@@ -4,6 +4,7 @@ from database import Database
 import requests
 import urllib.parse
 from twitter_utils import get_request_token, get_oauth_verifier_url, get_access_token
+import ssl
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -74,4 +75,6 @@ def results():
     return render_template('result.html', tw_list=tweet_list)
 
 if __name__ == '__main__':
-    app.run(port=4995, debug=True)
+    context = ssl.SSLContext()
+    context.load_cert_chain('cert.pem', 'key.pem')
+    app.run(port=4995, debug=True, ssl_context=context)
