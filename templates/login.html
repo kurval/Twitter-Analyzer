@@ -8,7 +8,7 @@
 </head>
 <body>
     {% for category, message in get_flashed_messages(with_categories=True) %}
-        <div class="alert alert-{{category}}">Error: {{ message }}</div>
+        <div class="alert alert-{{category}}">{{ message }}</div>
     {% endfor %}
     <h1>Hello World!</h1>
     <a href="{{ url_for('twitter_login') }}">

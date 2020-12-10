@@ -9,7 +9,7 @@
 
 <body>
     {% for category, message in get_flashed_messages(with_categories=True) %}
-        <div class="alert alert-{{category}}">Error: {{ message }}</div>
+        <div class="alert alert-{{category}}">{{ message }}</div>
     {% endfor %}
     <a href="{{ url_for('logout') }}">Logout</a><br>
     {{ user.screen_name }}
