@@ -35,6 +35,8 @@ def twitter_login():
 @app.route("/auth/twitter")
 def twitter_auth():
     oauth_verifier = request.args.get('oauth_verifier')
+    if not oauth_verifier:
+        return redirect(url_for('homepage'))
     acces_token = get_access_token(session['request_token'], oauth_verifier)
 
     user = User.load_data(acces_token['screen_name'])
