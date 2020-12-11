@@ -12,18 +12,20 @@
         <div class="alert alert-{{category}}" role="alert">{{ message }}</div>
     {% endfor %}
     <div class="container">
-        <h1 class="text-center">Login to Twitter Analyzer!</h1>
-        <div class="row justify-content-center p-2">
-            <a href="{{ url_for('twitter_login') }}">
-                <img src="https://cdn.cms-twdigitalassets.com/content/dam/developer-twitter/auth-docs/sign-in-with-twitter-gray.png.img.fullhd.medium.png" width="auto" height="auto">
-            </a>
-        </div>
-        <div class="row justify-content-center p-2">
-            <a href="{{ url_for('search') }}">
-                <button type="button" class="btn btn-primary btn-sm">
-                    Continue without login
-                </button>
-            </a>
+        <div>
+            <h1 class="text-center">Login to Twitter Analyzer!</h1>
+            <div class="row justify-content-center p-2">
+                <a href="{{ url_for('twitter_login') }}">
+                    <img src="https://cdn.cms-twdigitalassets.com/content/dam/developer-twitter/auth-docs/sign-in-with-twitter-gray.png.img.fullhd.medium.png" width="auto" height="auto">
+                </a>
+            </div>
+            <div class="row justify-content-center p-2">
+                <a href="{{ url_for('search') }}">
+                    <button type="button" class="btn btn-primary btn-sm">
+                        Continue without login
+                    </button>
+                </a>
+            </div>
         </div>
     </div>
 </body>

@@ -50,12 +50,11 @@ def twitter_auth():
 
 @app.route("/")
 def homepage():
-    flash("Good", "success")
-    flash("Not good", "danger")
     return render_template('login.html')
 
 @app.route("/search")
 def search():
+    flash("Search can take a few seconds so please be patient.", "warning")
     if 'screen_name' in session:
         return render_template('search.html', user=g.user)
     return render_template('search.html', user=None)

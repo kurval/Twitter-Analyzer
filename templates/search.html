@@ -12,14 +12,25 @@
     {% for category, message in get_flashed_messages(with_categories=True) %}
         <div class="alert alert-{{category}}" role="alert">{{ message }}</div>
     {% endfor %}
-    <div class="p-2">
-        <a href="{{ url_for('logout') }}">
-            <button type="button" class="btn btn-outline-primary">
-                Logout
-            </button>
-        </a>
+    {% if user %}
+        <div class="d-flex justify-content-end">
+            <div class="p-3 align-self-center">
+                @{{ user.screen_name }}
+            </div>
+            <div class="p-3">
+                <a href="{{ url_for('logout') }}">
+                    <button type="button" class="btn btn-outline-primary">
+                        Logout
+                    </button>
+                </a>
+            </div>
+        </div>
+    {% else %}
+        <div class="p-3 text-left">
+            <a href="{{ url_for('logout') }}">Go home</a>
+        </div>
+    {% endif %}
     </div>
-    {{ user.screen_name }}
     <div class="container">
         <div class="p-2">
             <form class="form-inline" action="{{ url_for('results') }}">
