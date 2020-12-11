@@ -21,6 +21,7 @@ def load_user():
 @app.route('/logout')
 def logout():
     session.clear()
+    flash("Goodbye!", "success")
     return redirect(url_for('homepage'))
 
 @app.route("/login/twitter")
@@ -29,7 +30,7 @@ def twitter_login():
         return redirect(url_for('search'))
     request_token = get_request_token()
     session['request_token'] = request_token
-
+    flash("Logged in succesfully", "success")
     return redirect(get_oauth_verifier_url(request_token))
 
 @app.route("/auth/twitter")
@@ -54,6 +55,9 @@ def homepage():
 
 @app.route("/search")
 def search():
+    if 'screen_name' not in session:
+        flash("Hello stranger!", "success")
+
     flash("Search can take a few seconds so please be patient.", "warning")
     if 'screen_name' in session:
         return render_template('search.html', user=g.user)
@@ -65,8 +69,10 @@ def results():
     if not query:
         return redirect(url_for('search'))
     if 'screen_name' in session:
+        user=g.user
         tweets = get_tweets_by_user(g.user, query)
     else:
+        user=None
         tweets = twitter_request_bearer(query)
     tweet_list = [{'tweet' : tweet['text'],
                     'name' : tweet['user']['screen_name'],
@@ -81,7 +87,7 @@ def results():
         json_response = response.json()
         tweet['label'] = json_response['label']
 
-    return render_template('result.html', tw_list=tweet_list)
+    return render_template('result.html', tw_list=tweet_list, user=user)
 
 if __name__ == '__main__':
     context = ssl.SSLContext()
