@@ -1,5 +1,5 @@
 import constants
-import urllib.parse
+import urllib.parse as urlparse
 import base64
 import requests
 import json
@@ -8,9 +8,9 @@ OAUTH2_TOKEN = 'https://api.twitter.com/oauth2/token'
 
 def get_bearer_token(consumer_key, consumer_secret):
     # enconde consumer key
-    consumer_key = urllib.parse.quote(consumer_key)
+    consumer_key = urlparse.quote(consumer_key)
     # encode consumer secret
-    consumer_secret = urllib.parse.quote(consumer_secret)
+    consumer_secret = urlparse.quote(consumer_secret)
     # create bearer token
     bearer_token = consumer_key + ':' + consumer_secret
     # base64 encode the token
@@ -27,6 +27,6 @@ def get_bearer_token(consumer_key, consumer_secret):
 def twitter_request_bearer(query):
     headers = {
         "Authorization": "Bearer " + constants.BEARER}
-    content = requests.get(f"{constants.SEARCH_URL}?q={query}", headers=headers)
+    content = requests.get(f"{constants.SEARCH_URL}?q={urlparse.quote_plus(query)}", headers=headers)
     return json.loads(content.text)
 
