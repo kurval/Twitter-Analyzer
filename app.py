@@ -50,8 +50,8 @@ def twitter_auth():
 
 @app.route("/")
 def homepage():
-    flash("Good", "info")
-    flash("Not good", "error")
+    flash("Good", "success")
+    flash("Not good", "danger")
     return render_template('login.html')
 
 @app.route("/search")

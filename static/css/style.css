@@ -1,19 +1,7 @@
-.alert {
-    padding: 0.5em;
-    margin: 0.5em;
-    border-radius: 5px;
-    font-size: 1.2rem;
-    margin-bottom: 16px;
-    border-width: 2px;
-    border-style: solid;
-  }
-  
-  .alert-error {
-    background-color: rgb(233, 72, 54);
-    color: white;
-  }
-  
-  .alert-info {
-    background-color: rgb(0, 255, 94);
-    color: black;
-  }
+.results {
+    margin-bottom: 5rem;
+}
+
+.search {
+    margin-bottom: 2rem;
+}
