@@ -44,31 +44,49 @@
             </form>
         </div>
         <table class="table table-striped">
+            <span>*This search serves data for the past seven days.</span>
             <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">Search operators</th>
+                <th scope="col">Finds Tweets...</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <th scope="row">watching now</th>
+                <td>containing both “watching” and “now”. This is the default operator.</td>
             </tr>
             <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
+                <th scope="row">“happy hour”</th>
+                <td>containing the exact phrase “happy hour”.</td>
             </tr>
             <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
+                <th scope="row">love OR hate</th>
+                <td>containing either “love” or “hate” (or both).</td>
+            </tr>
+            <tr>
+                <th scope="row">beer -root</th>
+                <td>containing “beer” but not “root”.</td>
+            </tr>
+            <tr>
+                <th scope="row">#haiku</th>
+                <td>containing the hashtag “haiku”.</td>
+            </tr>
+            <tr>
+                <th scope="row">from:interior</th>
+                <td>sent from Twitter account “interior”.</td>
+            </tr>
+            <tr>
+                <th scope="row">to:NASA</th>
+                <td>a Tweet authored in reply to Twitter account “NASA”.</td>
+            </tr>
+            <tr>
+                <th scope="row">@NASA</th>
+                <td>mentioning Twitter account “NASA”.</td>
+            </tr>
+            <tr>
+                <th scope="row">puppy filter:media</th>
+                <td>containing “puppy” and an image or video.</td>
             </tr>
             </tbody>
         </table>

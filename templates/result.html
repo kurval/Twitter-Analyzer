@@ -31,27 +31,31 @@
             </div>
         {% endif %}
     </div>
-    <div class="container">
-        <span class="badge badge-danger even-larger-badge">Negative</span>
-        <span class="badge badge-success even-larger-badge">Positive</span>
-        <span class="badge badge-info even-larger-badge">Neutral</span>
-        <ul class="list-group results">
+    {% if tw_list %}
+        <div class="container">
+            <span class="badge badge-danger even-larger-badge">Negative</span>
+            <span class="badge badge-success even-larger-badge">Positive</span>
+            <span class="badge badge-info even-larger-badge">Neutral</span>
+            <ul class="list-group results">
 
-            {% set css_class = 'list-group-item-info' %}
+                {% set css_class = 'list-group-item-info' %}
 
-            {% for element in tw_list %}
-                {% if element['label'] == 'neg' %}
-                    {% set css_class = 'list-group-item-danger' %}
-                {% elif element['label'] == 'pos' %}
-                    {% set css_class = 'list-group-item-success' %}
-                {% endif %}
-                <a href="{{ element['url'] }}" class="list-group-item list-group-item-action {{ css_class }}" target="_blank">
-                    <b>@{{ element['name'] }}</b><br>
-                    {{ element['tweet'] }}
-                </a>
-            {% endfor %}
-        </ul>
-    </div>
+                {% for element in tw_list %}
+                    {% if element['label'] == 'neg' %}
+                        {% set css_class = 'list-group-item-danger' %}
+                    {% elif element['label'] == 'pos' %}
+                        {% set css_class = 'list-group-item-success' %}
+                    {% endif %}
+                    <a href="{{ element['url'] }}" class="list-group-item list-group-item-action {{ css_class }}" target="_blank">
+                        <b>@{{ element['name'] }}</b><br>
+                        {{ element['tweet'] }}
+                    </a>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <h2 class="text-center mt-5">No results found. Try another <a href="{{ url_for('search') }}">search</a></h2>
+    {% endif %}
 </body>
 
 </html>
