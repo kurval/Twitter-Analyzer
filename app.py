@@ -55,7 +55,7 @@ def homepage():
 
 @app.route("/search")
 def search():
-    if 'quest' not in session:
+    if 'quest' not in session and 'screen_name' not in session:
         session['quest'] = 'anonymous'
         flash("Hello stranger!", "success")
 
@@ -77,7 +77,7 @@ def results():
         tweets = twitter_request_bearer(query)
     tweet_list = [{'tweet' : tweet['text'],
                     'name' : tweet['user']['screen_name'],
-                    'time' : tweet['created_at'],
+                    'time' : tweet['created_at'].split('+')[0] + 'UTC',
                     'id' : tweet['id_str'],
                     'url' : 'https://twitter.com/' +  tweet['user']['screen_name'] + '/status/' + tweet['id_str'],
                     'label' : 'neutral'} 
