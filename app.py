@@ -30,7 +30,6 @@ def twitter_login():
         return redirect(url_for('search'))
     request_token = get_request_token()
     session['request_token'] = request_token
-    flash("Logged in succesfully", "success")
     return redirect(get_oauth_verifier_url(request_token))
 
 @app.route("/auth/twitter")
@@ -47,6 +46,7 @@ def twitter_auth():
     user.save_to_db()
 
     session['screen_name'] = user.screen_name
+    flash("Logged in succesfully", "success")
     return redirect(url_for('search'))
 
 @app.route("/")
