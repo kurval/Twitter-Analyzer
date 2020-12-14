@@ -13,8 +13,8 @@
     {% endfor %}
     <div class="container">
         <div>
-            <h1 class="text-center mt-5 text-info">Welcome to Twitter Analyzer!</h1>
-            <p class="text-center">Search and Analyze Tweets</p>
+            <h1 class="text-center mt-5">Welcome to Twitter Analyzer!</h1>
+            <p class="text-center">Explore and Analyze Tweets</p>
             <div class="row justify-content-center p-2">
                 <a href="{{ url_for('twitter_login') }}">
                     <img class="save_button" src="https://cdn.cms-twdigitalassets.com/content/dam/developer-twitter/auth-docs/sign-in-with-twitter-gray.png.img.fullhd.medium.png" width="auto" height="auto">
@@ -22,7 +22,7 @@
             </div>
             <div class="row justify-content-center p-2">
                 <a href="{{ url_for('search') }}">
-                    <button type="button" class="border border-dark text-white btn btn-sm save_button" style="background-color: #c737e0;">
+                    <button type="button" class="btn btn-secondary btn-sm save_button">
                         <strong>Continue without login</strong>
                     </button>
                 </a>
