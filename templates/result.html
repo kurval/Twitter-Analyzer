@@ -12,25 +12,26 @@
     {% for category, message in get_flashed_messages(with_categories=True) %}
         <div class="alert alert-{{category}}" role="alert">{{ message }}</div>
     {% endfor %}
-    <div class="d-flex bd-highlight mb-3">
-        <div class="mr-auto p-3 bd-highlight">
-            <a href="{{ url_for('search') }}">Back to search</a>
-        </div>
+    <nav class="navbar sticky-top navbar-light" style="background-color: #e3f2fd;">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb m-1" style="background-color: #e3f2fd;">
+              <li class="breadcrumb-item"><a href="{{ url_for('logout') }}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{ url_for('search') }}">Search</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Results</li>
+            </ol>
+        </nav>
         {% if user %}
-            <div class="d-flex justify-content-end">
-                <div class="p-3 align-self-center">
-                    <strong class="text-secondary">@{{ user.screen_name }}</strong>
-                </div>
-                <div class="p-3">
-                    <a href="{{ url_for('logout') }}">
-                        <button type="button" class="btn btn-outline-primary">
-                            Logout
-                        </button>
-                    </a>
-                </div>
-            </div>
+            <form class="form-inline">
+                <strong class="mr-sm-4 mr-3 text-secondary">@{{ user.screen_name }}</strong>
+                <a href="{{ url_for('logout') }}">
+                    <button type="button" class="btn btn-outline-primary my-2 my-sm-0">
+                        Logout
+                    </button>
+                </a>
+            </form>
         {% endif %}
-    </div>
+    </nav>
+
     {% if tw_list %}
         <div class="container">
             <span class="badge badge-danger even-larger-badge">Negative</span>

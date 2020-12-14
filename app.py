@@ -59,7 +59,6 @@ def search():
         session['quest'] = 'anonymous'
         flash("Hello stranger!", "success")
 
-    flash("Search can take a few seconds so please be patient.", "warning")
     if 'screen_name' in session:
         return render_template('search.html', user=g.user)
     return render_template('search.html', user=None)
