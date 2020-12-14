@@ -75,7 +75,8 @@ def results():
         user=None
         tweets = twitter_request_bearer(query)
     tweet_list = [{'tweet' : tweet['text'],
-                    'name' : tweet['user']['screen_name'],
+                    'name' : tweet['user']['name'],
+                    'screen_name' : tweet['user']['screen_name'],
                     'time' : tweet['created_at'].split('+')[0] + 'UTC',
                     'id' : tweet['id_str'],
                     'url' : 'https://twitter.com/' +  tweet['user']['screen_name'] + '/status/' + tweet['id_str'],

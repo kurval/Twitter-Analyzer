@@ -48,7 +48,9 @@
                         {% set css_class = 'list-group-item-success' %}
                     {% endif %}
                     <a href="{{ element['url'] }}" class="list-group-item list-group-item-action {{ css_class }}" target="_blank">
-                        <b>@{{ element['name'] }}</b><small> {{ element['time'] }}</small><br>
+                        <b class="text-dark">{{ element['name'] }}</b>
+                        <b>@{{ element['screen_name'] }}</b>
+                        <small> {{ element['time'] }}</small><br>
                         {{ element['tweet'] }}
                     </a>
                 {% endfor %}
