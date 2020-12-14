@@ -22,7 +22,7 @@
         </nav>
         {% if user %}
             <form class="form-inline">
-                <strong class="mr-sm-4 mr-3 text-secondary">@{{ user.screen_name }}</strong>
+                <strong class="mr-sm-4 mx-3 text-secondary">@{{ user.screen_name }}</strong>
                 <a href="{{ url_for('logout') }}">
                     <button type="button" class="btn btn-outline-primary my-2 my-sm-0">
                         Logout
