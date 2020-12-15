@@ -1,7 +1,7 @@
 import psycopg2
 from database import CursorFromConnectionFromPool
 import oauth2
-from twitter_utils import consumer
+from twitter_auth import consumer
 import json
 
 class User:
@@ -14,7 +14,7 @@ class User:
     def __repr__(self):
         return f"<User {self.screen_name}>"
 
-    def save_to_db(self):
+    def save_to_db(self, access_token):
         with CursorFromConnectionFromPool() as cursor:
             cursor.execute('INSERT INTO users (screen_name, oauth_token, oauth_token_secret) VALUES (%s, %s, %s)',
                             (self.screen_name, self.oauth_token, self.oauth_token_secret))

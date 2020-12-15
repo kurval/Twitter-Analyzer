@@ -1,11 +1,13 @@
 from flask import Flask, render_template, session, redirect, request, url_for, g, flash
-from user import User
 from database import Database
-import requests
-import urllib.parse
-from twitter_utils import get_request_token, get_oauth_verifier_url, get_access_token, get_tweets_by_user
-from bearer import twitter_request_bearer
+from user import User
 import ssl
+from twitter_auth import get_request_token,get_oauth_verifier_url, get_access_token
+from twitter_utils import get_tweets_by_user,\
+                            get_tweets_by_app,\
+                            parse_tweets,\
+                            analyze_tweets,\
+                            encode_query
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -20,8 +22,12 @@ def load_user():
 
 @app.route('/logout')
 def logout():
+    logout = True if 'screen_name' in session else False
     session.clear()
-    flash("Goodbye!", "success")
+    if logout:
+        flash("You have been successfully logged out!", "success")
+    else:
+        flash("Goodbye stranger!", "success")
     return redirect(url_for('homepage'))
 
 @app.route("/login/twitter")
@@ -36,17 +42,19 @@ def twitter_login():
 def twitter_auth():
     oauth_verifier = request.args.get('oauth_verifier')
     if not oauth_verifier:
+        flash("An error occured when trying to login. \
+                Please try again or continue without login", "danger")
         return redirect(url_for('homepage'))
-    acces_token = get_access_token(session['request_token'], oauth_verifier)
+    access_token = get_access_token(session['request_token'], oauth_verifier)
 
-    user = User.load_data(acces_token['screen_name'])
+    user = User.load_data(access_token['screen_name'])
     if not user:
         user = User(acces_token['screen_name'], acces_token['oauth_token'],
                     acces_token['oauth_token_secret'], None)
-    user.save_to_db()
+        user.save_to_db()
 
     session['screen_name'] = user.screen_name
-    flash("Logged in succesfully", "success")
+    flash("You have been successfully logged in!", "success")
     return redirect(url_for('search'))
 
 @app.route("/")
@@ -55,7 +63,7 @@ def homepage():
 
 @app.route("/search")
 def search():
-    if 'quest' not in session and 'screen_name' not in session:
+    if 'quest' and 'screen_name' not in session:
         session['quest'] = 'anonymous'
         flash("Hello stranger!", "success")
 
@@ -67,29 +75,18 @@ def search():
 def results():
     query = request.args.get('q')
     if not query:
+        flash("Empty search. Check the table above of how to use search operators.", "warning")
         return redirect(url_for('search'))
-    elif query[0] == '@':
-        query = query.replace('@', 'from:', 1)
+
     if 'screen_name' in session:
         user=g.user
-        tweets = get_tweets_by_user(g.user, query)
+        tweets = get_tweets_by_user(user, encode_query(query))
     else:
         user=None
-        tweets = twitter_request_bearer(query)
-    tweet_list = [{'tweet' : tweet['text'],
-                    'name' : tweet['user']['name'],
-                    'screen_name' : tweet['user']['screen_name'],
-                    'time' : tweet['created_at'].split('+')[0] + 'UTC',
-                    'id' : tweet['id_str'],
-                    'url' : 'https://twitter.com/' +  tweet['user']['screen_name'] + '/status/' + tweet['id_str'],
-                    'label' : 'neutral'} 
-                    for tweet in tweets['statuses']]
+        tweets = get_tweets_by_app(encode_query(query))
 
-    for tweet in tweet_list:
-        response = requests.post('http://text-processing.com/api/sentiment/', data={'text': tweet['tweet']})
-        json_response = response.json()
-        tweet['label'] = json_response['label']
-
+    tweet_list = parse_tweets(tweets)
+    analyze_tweets(tweet_list)
     return render_template('result.html', tw_list=tweet_list, user=user)
 
 if __name__ == '__main__':
