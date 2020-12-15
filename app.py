@@ -73,17 +73,13 @@ def search():
 
 @app.route('/results')
 def results():
-    query = request.args.get('q')
-    if not query:
-        flash("Empty search. Check the table above of how to use search operators.", "warning")
-        return redirect(url_for('search'))
-
+    query = encode_query(request.args.get('q'))
     if 'screen_name' in session:
         user=g.user
-        tweets = get_tweets_by_user(user, encode_query(query))
+        tweets = get_tweets_by_user(user, query)
     else:
         user=None
-        tweets = get_tweets_by_app(encode_query(query))
+        tweets = get_tweets_by_app(query)
 
     tweet_list = parse_tweets(tweets)
     analyze_tweets(tweet_list)

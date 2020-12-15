@@ -2,8 +2,13 @@ import constants
 import requests
 import json
 import urllib.parse as urlparse
+from flask import redirect
 
 def encode_query(query):
+    if not query:
+        flash("Empty search. Check the table above of how to use search operators.", "warning")
+        return redirect(url_for('search'))
+
     if query[0] == '@':
         query = query.replace('@', 'from:', 1)
     return urlparse.quote_plus(query)
