@@ -1,6 +1,6 @@
 import oauth2
 import constants
-from flask import redirect
+from flask import redirect, flash
 import urllib.parse as urlparse
 
 consumer = oauth2.Consumer(constants.CONSUMER_KEY, constants.CONSUMER_SECRET)
