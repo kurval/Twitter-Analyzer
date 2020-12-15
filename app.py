@@ -68,6 +68,8 @@ def results():
     query = request.args.get('q')
     if not query:
         return redirect(url_for('search'))
+    elif query[0] == '@':
+        query = query.replace('@', 'from:', 1)
     if 'screen_name' in session:
         user=g.user
         tweets = get_tweets_by_user(g.user, query)
