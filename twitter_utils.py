@@ -2,6 +2,7 @@ import constants
 import requests
 import json
 import urllib.parse as urlparse
+from flask import abort
 
 def encode_query(query):
     if query[0] == '@':
@@ -15,6 +16,8 @@ def get_tweets_by_app(query):
     headers = {
         "Authorization": "Bearer " + constants.BEARER}
     content = requests.get(f"{constants.SEARCH_URL}?q={query}", headers=headers)
+    if content.status_code != 200:
+        abort(400)
     return json.loads(content.text)
 
 def parse_tweets(tweets):
