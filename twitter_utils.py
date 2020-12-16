@@ -33,5 +33,7 @@ def parse_tweets(tweets):
 def analyze_tweets(tweet_list):
     for tweet in tweet_list:
         response = requests.post('http://text-processing.com/api/sentiment/', data={'text': tweet['tweet']})
+        if response.status_code != 200:
+            abort(400)
         json_response = response.json()
         tweet['label'] = json_response['label']
