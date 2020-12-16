@@ -1,4 +1,5 @@
-from flask import Flask, render_template, session, redirect, request, url_for, g, flash
+from flask import Flask, render_template, session, redirect, request, url_for, g, flash, abort
+import error_handlers
 from database import Database
 from user import User
 import ssl
@@ -10,6 +11,7 @@ from twitter_utils import get_tweets_by_user,\
                             encode_query
 
 app = Flask(__name__)
+app.register_blueprint(error_handlers.blueprint)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = '1234'
 
@@ -41,10 +43,6 @@ def twitter_login():
 @app.route("/auth/twitter")
 def twitter_auth():
     oauth_verifier = request.args.get('oauth_verifier')
-    if not oauth_verifier:
-        flash("An error occured when trying to login. \
-                Please try again or continue without login", "danger")
-        return redirect(url_for('homepage'))
     access_token = get_access_token(session['request_token'], oauth_verifier)
 
     user = User.load_data(access_token['screen_name'])
