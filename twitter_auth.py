@@ -1,6 +1,6 @@
 import oauth2
 import constants
-from flask import redirect, flash
+from flask import abort
 import urllib.parse as urlparse
 
 consumer = oauth2.Consumer(constants.CONSUMER_KEY, constants.CONSUMER_SECRET)
@@ -13,9 +13,7 @@ def get_request_token():
     client = oauth2.Client(consumer)
     response, content = client.request(constants.REQUEST_TOKEN_URL, 'POST')
     if response.status != 200:
-        flash("An error occured when trying to login. \
-                Please try again or continue without login", "danger")
-        return redirect(url_for('homepage'))
+        abort(403)
     return dict(urlparse.parse_qsl(content.decode('utf-8')))
 
 def get_oauth_verifier_url(request_token):
@@ -33,7 +31,5 @@ def get_access_token(request_token, oauth_verifier):
     client = oauth2.Client(consumer, token)
     response, content = client.request(constants.ACCES_TOKEN_URL, 'POST')
     if response.status != 200:
-        flash("An error occured when trying to login. \
-                Please try again or continue without login", "danger")
-        return redirect(url_for('homepage'))
+        abort(403)
     return dict(urlparse.parse_qsl(content.decode('utf-8')))

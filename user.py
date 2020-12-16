@@ -3,6 +3,7 @@ from database import CursorFromConnectionFromPool
 import oauth2
 from twitter_auth import consumer
 import json
+from flask import abort
 
 class User:
     def __init__(self, screen_name, oauth_token, oauth_token_secret, id):
@@ -31,14 +32,15 @@ class User:
                             id=user_data[0])
 
     def twitter_request(self, uri, verb='GET'):
-        # Create an 'authorized_token' Token object and use that to perform Twitter API calls on behalf of the user
+        '''
+        Create an 'authorized_token' Token object and
+        use that to perform Twitter API calls on behalf of the user.
+        '''
         authorized_token = oauth2.Token(self.oauth_token, self.oauth_token_secret)
         authorized_client = oauth2.Client(consumer, authorized_token)
 
-        # Make Twitter API calls!
         response, content = authorized_client.request(uri, verb)
 
         if response.status != 200:
-            print("An error occured when searching!")
-
+            abort(400)
         return json.loads(content.decode('utf-8'))
