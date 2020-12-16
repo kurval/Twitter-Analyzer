@@ -61,7 +61,7 @@ def homepage():
 
 @app.route("/search")
 def search():
-    if 'quest' and 'screen_name' not in session:
+    if 'quest' not in session and 'screen_name' not in session:
         session['quest'] = 'anonymous'
         flash("Hello stranger!", "success")
 
@@ -71,13 +71,18 @@ def search():
 
 @app.route('/results')
 def results():
-    query = encode_query(request.args.get('q'))
+    query = request.args.get('q')
+    if not query:
+        flash("Empty search. Check the table above of how to use search operators.", "warning")
+        return redirect(url_for('search'))
+
+    encoded_query = encode_query(query)
     if 'screen_name' in session:
         user=g.user
-        tweets = get_tweets_by_user(user, query)
+        tweets = get_tweets_by_user(user, encoded_query)
     else:
         user=None
-        tweets = get_tweets_by_app(query)
+        tweets = get_tweets_by_app(encoded_query)
 
     tweet_list = parse_tweets(tweets)
     analyze_tweets(tweet_list)
