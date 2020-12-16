@@ -13,7 +13,7 @@ def get_request_token():
     client = oauth2.Client(consumer)
     response, content = client.request(constants.REQUEST_TOKEN_URL, 'POST')
     if response.status != 200:
-        abort(403)
+        abort(401)
     return dict(urlparse.parse_qsl(content.decode('utf-8')))
 
 def get_oauth_verifier_url(request_token):
@@ -31,5 +31,5 @@ def get_access_token(request_token, oauth_verifier):
     client = oauth2.Client(consumer, token)
     response, content = client.request(constants.ACCES_TOKEN_URL, 'POST')
     if response.status != 200:
-        abort(403)
+        abort(401)
     return dict(urlparse.parse_qsl(content.decode('utf-8')))
