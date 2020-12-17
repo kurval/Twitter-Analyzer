@@ -43,7 +43,7 @@
                             <input class="form-control" value="{{ query }}" type="text" name="q" id="q" placeholder="Your Twitter search">
                         </div>
                         <button type="submit" class="btn btn-primary mb-2" onclick="loading();">Search</button>
-                        <button type="submit" name="r" value="random" class="btn btn-success mb-2 ml-2" onclick="loading();">Random</button>
+                        <button type="submit" name="r" value="random" class="btn btn-success mb-2 ml-2" onclick="loading();">Random <i class="fa fa-star"></i></button>
                     </form>
                 </div>
                 <span class="badge badge-danger even-larger-badge">Negative</span>
@@ -72,7 +72,7 @@
             <h2 class="text-center mt-5">No results found. Try another <a href="{{ url_for('search') }}">search</a></h2>
         {% endif %}
     </div>
-    
+
     <script type="text/javascript">// <![CDATA[
         function loading(){
             $("#loading").show();
