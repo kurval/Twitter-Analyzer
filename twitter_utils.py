@@ -41,6 +41,8 @@ def analyze_tweets(tweet_list):
 
 def get_random_word():
     response = requests.get("https://www.mit.edu/~ecprice/wordlist.10000")
+    if response.status_code != 200:
+            abort(400)
     WORDS = response.content.splitlines()
     word = random.choice(WORDS)
     return word.decode('utf-8')

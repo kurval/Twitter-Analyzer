@@ -1,57 +1,82 @@
 {% extends "layout.html" %}
 {% block title %}Results{% endblock %}
+{% block head %}
+  {{ super() }}
+  <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+{% endblock %}
 {% block content %}
-    <nav class="navbar sticky-top navbar-light" style="background-color: #e3f2fd;">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb m-0" style="background-color: #e3f2fd;">
-            <li class="breadcrumb-item"><a href="{{ url_for('logout') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ url_for('search') }}">Search</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Results</li>
-            </ol>
-        </nav>
-        {% if user %}
-            <form class="form-inline">
-                <strong class="mr-sm-4 mx-3 text-secondary">@{{ user.screen_name }}</strong>
-                <a href="{{ url_for('logout') }}">
-                    <button type="button" class="btn btn-outline-primary my-2 my-sm-0">
-                        Logout
-                    </button>
-                </a>
-            </form>
-        {% endif %}
-    </nav>
-    <a href="{{ url_for('search') }}">
-        <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-arrow-left-circle mt-4 ml-4" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-            <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
-        </svg>
-    </a>
-    {% if tw_list %}
-        <div class="container">
-            <h3>{{ query }}</h3>
-            <span class="badge badge-danger even-larger-badge">Negative</span>
-            <span class="badge badge-success even-larger-badge">Positive</span>
-            <span class="badge badge-info even-larger-badge">Neutral</span>
-            <ul class="list-group results">
-
-                {% set css_class = 'list-group-item-info' %}
-
-                {% for element in tw_list %}
-                    {% if element['label'] == 'neg' %}
-                        {% set css_class = 'list-group-item-danger' %}
-                    {% elif element['label'] == 'pos' %}
-                        {% set css_class = 'list-group-item-success' %}
-                    {% endif %}
-                    <a href="{{ element['url'] }}" class="list-group-item list-group-item-action {{ css_class }}" target="_blank">
-                        <b class="text-dark">{{ element['name'] }}</b>
-                        <b>@{{ element['screen_name'] }}</b>
-                        <small> {{ element['time'] }}</small><br>
-                        {{ element['tweet'] }}
+    <div id="loading"></div>
+    <div class="content-search">
+        <nav class="navbar sticky-top navbar-light" style="background-color: #e3f2fd;">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb m-0" style="background-color: #e3f2fd;">
+                <li class="breadcrumb-item"><a href="{{ url_for('logout') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('search') }}">Search</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Results</li>
+                </ol>
+            </nav>
+            {% if user %}
+                <form class="form-inline">
+                    <strong class="mr-sm-4 mx-3 text-secondary">@{{ user.screen_name }}</strong>
+                    <a href="{{ url_for('logout') }}">
+                        <button type="button" class="btn btn-outline-primary my-2 my-sm-0">
+                            Logout
+                        </button>
                     </a>
-                {% endfor %}
-            </ul>
-        </div>
-    {% else %}
-        <h2 class="text-center mt-5">No results found. Try another <a href="{{ url_for('search') }}">search</a></h2>
-    {% endif %}
+                </form>
+            {% endif %}
+        </nav>
+        <a href="{{ url_for('search') }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-arrow-left-circle mt-4 ml-4" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+            </svg>
+        </a>
+        {% if tw_list %}
+            <div class="container">
+                <div class="pb-2">
+                    <form class="form-inline" action="{{ url_for('results') }}">
+                        <div class="form-group mb-2 mr-1">
+                            <label for="q">Twitter search</label>
+                        </div>
+                        <div class="form-group mx-sm-3 mx-2 mb-2">
+                            <input class="form-control" value="{{ query }}" type="text" name="q" id="q" placeholder="Your Twitter search">
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-2" onclick="loading();">Search</button>
+                        <button type="submit" name="r" value="random" class="btn btn-success mb-2 ml-2" onclick="loading();">Random</button>
+                    </form>
+                </div>
+                <span class="badge badge-danger even-larger-badge">Negative</span>
+                <span class="badge badge-success even-larger-badge">Positive</span>
+                <span class="badge badge-info even-larger-badge">Neutral</span>
+                <ul class="list-group results">
+
+                    {% set css_class = 'list-group-item-info' %}
+
+                    {% for element in tw_list %}
+                        {% if element['label'] == 'neg' %}
+                            {% set css_class = 'list-group-item-danger' %}
+                        {% elif element['label'] == 'pos' %}
+                            {% set css_class = 'list-group-item-success' %}
+                        {% endif %}
+                        <a href="{{ element['url'] }}" class="list-group-item list-group-item-action {{ css_class }}" target="_blank">
+                            <b class="text-dark">{{ element['name'] }}</b>
+                            <b>@{{ element['screen_name'] }}</b>
+                            <small> {{ element['time'] }}</small><br>
+                            {{ element['tweet'] }}
+                        </a>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <h2 class="text-center mt-5">No results found. Try another <a href="{{ url_for('search') }}">search</a></h2>
+        {% endif %}
+    </div>
+    
+    <script type="text/javascript">// <![CDATA[
+        function loading(){
+            $("#loading").show();
+            $(".content-search").hide();       
+        }
+    // ]]></script>
 {% endblock %}
