@@ -11,14 +11,43 @@
     {% endblock %}
   </head>
   <body>
-    {% for category, message in get_flashed_messages(with_categories=True) %}
-        <div class="alert alert-{{category}} content-search" role="alert">{{ message }}</div>
-    {% endfor %}
-    <div id="content">{% block content %}{% endblock %}</div>
-    <div id="footer" class="text-center my-3 content-search">
-      {% block footer %}
-      &copy; Copyright 2020 by <a href="https://twitter.com/KurkelaValtteri" target="_blank">@kurval</a>
-      {% endblock %}
+    <div id="loading"></div>
+    <div class="hide-content">
+      {% for category, message in get_flashed_messages(with_categories=True) %}
+          <div class="alert alert-{{category}} hide-content" role="alert">{{ message }}</div>
+      {% endfor %}
+      <div id="navigation">
+        <nav class="navbar sticky-top navbar-light" style="background-color: #e3f2fd;">
+          <nav aria-label="breadcrumb">
+              <ol class="breadcrumb m-0" style="background-color: #e3f2fd;">
+              <li class="breadcrumb-item"><a href="{{ url_for('logout') }}">Home</a></li>
+              {% block navigation %}{% endblock %}
+              </ol>
+          </nav>
+          {% if user %}
+            <form class="form-inline">
+                <strong class="mr-sm-4 mx-3 text-secondary">@{{ user.screen_name }}</strong>
+                <a href="{{ url_for('logout') }}">
+                    <button type="button" class="btn btn-outline-primary my-2 my-sm-0">
+                        Logout
+                    </button>
+                </a>
+            </form>
+          {% endif %}
+        </nav>
+      </div>
+      <div id="content">{% block content %}{% endblock %}</div>
+      <div id="footer" class="text-center my-3 hide-content">
+        {% block footer %}
+        &copy; Copyright 2020 by <a href="https://twitter.com/KurkelaValtteri" target="_blank">@kurval</a>
+        {% endblock %}
+      </div>
     </div>
+    <script type="text/javascript">// <![CDATA[
+      function loading(){
+          $("#loading").show();
+          $(".hide-content").hide();       
+      }
+    // ]]></script>
   </body>
 </html>
