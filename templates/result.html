@@ -5,6 +5,7 @@
   <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 {% endblock %}
 {% block navigation %}
+    <li class="breadcrumb-item"><a href="{{ url_for('logout') }}">Home</a></li>
     <li class="breadcrumb-item"><a href="{{ url_for('search') }}">Search</a></li>
     <li class="breadcrumb-item active" aria-current="page">Results</li>
 {% endblock %}

@@ -1,5 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}Login{% endblock %}
+{% block navigation %}
+    <li class="breadcrumb-item"><a href="{{ url_for('homepage') }}">Home</a></li>
+{% endblock %}
 {% block content %}
     <div class="container">
     <div class="text-center">
