@@ -8,7 +8,8 @@ from twitter_utils import get_tweets_by_user,\
                             get_tweets_by_app,\
                             parse_tweets,\
                             analyze_tweets,\
-                            encode_query
+                            encode_query,\
+                            get_random_word
 
 app = Flask(__name__)
 app.register_blueprint(error_handlers.blueprint)
@@ -71,8 +72,11 @@ def search():
 
 @app.route('/results')
 def results():
+    r = request.args.get('r')
     query = request.args.get('q')
-    if not query:
+    if r == "random":
+        query = get_random_word()
+    elif not query:
         flash("Empty search. Check the table above of how to use search operators.", "warning")
         return redirect(url_for('search'))
 
@@ -86,7 +90,7 @@ def results():
 
     tweet_list = parse_tweets(tweets)
     analyze_tweets(tweet_list)
-    return render_template('result.html', tw_list=tweet_list, user=user)
+    return render_template('result.html', tw_list=tweet_list, user=user, query=query)
 
 if __name__ == '__main__':
     context = ssl.SSLContext()

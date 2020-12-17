@@ -3,6 +3,7 @@ import requests
 import json
 import urllib.parse as urlparse
 from flask import abort
+import random
 
 def encode_query(query):
     if query[0] == '@':
@@ -37,3 +38,9 @@ def analyze_tweets(tweet_list):
             abort(400)
         json_response = response.json()
         tweet['label'] = json_response['label']
+
+def get_random_word():
+    response = requests.get("https://www.mit.edu/~ecprice/wordlist.10000")
+    WORDS = response.content.splitlines()
+    word = random.choice(WORDS)
+    return word.decode('utf-8')
