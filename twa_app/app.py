@@ -2,6 +2,7 @@ from flask import Flask, render_template, session, redirect, request, url_for, g
 import error_handlers
 from database import Database
 from user import User
+import sys
 from twitter_auth import get_request_token,get_oauth_verifier_url, get_access_token
 from twitter_utils import get_tweets_by_user,\
                             get_tweets_by_app,\
@@ -15,7 +16,8 @@ app.register_blueprint(error_handlers.blueprint)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = '1234'
 
-#Database.initialise(database="learning", host="localhost", user="postgres", password="filsu90")
+def init_database():
+    Database.initialise(database="learning", host="localhost", user="postgres", password="filsu90")
 
 @app.before_request
 def load_user():
@@ -92,4 +94,6 @@ def results():
     return render_template('result.html', tw_list=tweet_list, user=user, query=query)
 
 if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        init_database()
     app.run(port=4995, debug=True)

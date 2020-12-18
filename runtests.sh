@@ -8,7 +8,7 @@ p1_pid=$!
 # Running tests on Chrome
 
 echo Running tests on Chrome
-python tests.py
+python tests.py -test
 ret=$?
 
 # Check if tests fails or passes
