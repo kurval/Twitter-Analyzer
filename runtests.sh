@@ -1,14 +1,12 @@
 #!/bin/bash
 
 # Run app in the background
-python ./twa_app/app.py &
-p1_pid=$!
-
+python ./twa_app/app.py -test > log_file 2>&1 &
+p1=$!
 
 # Running tests on Chrome
-
 echo Running tests on Chrome
-python tests.py -test
+python tests.py
 ret=$?
 
 # Check if tests fails or passes
@@ -19,7 +17,11 @@ else
     ret=0
 fi
 
+# Showing log
+echo LOGS
+cat log_file
+
 # Kill streamlit process
-kill $p1_pid
+kill $p1
 
 exit $ret
