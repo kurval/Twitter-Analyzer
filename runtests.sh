@@ -18,7 +18,7 @@ else
 fi
 
 # Showing output
-echo outputS
+echo ****LOGS****
 cat output_file
 
 # Kill streamlit process
