@@ -64,7 +64,7 @@ def homepage():
 def search():
     if 'quest' not in session and 'screen_name' not in session:
         session['quest'] = 'anonymous'
-        flash("Hello stranger!", "success")
+        flash("Hello stranger! Go ahead and run your first Twitter search or use Random search.", "success")
 
     if 'screen_name' in session:
         return render_template('search.html', user=g.user)
@@ -77,7 +77,7 @@ def results():
     if r == "random":
         query = get_random_word()
     elif not query:
-        flash("Empty search. Check the table above of how to use search operators.", "warning")
+        flash("Empty search. See the table above of how to use search operators or use random search.", "warning")
         return redirect(url_for('search'))
 
     encoded_query = encode_query(query)
