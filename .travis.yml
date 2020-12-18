@@ -19,8 +19,8 @@ install:
   - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 
 before_script:
-  - sudo touch log_file
-  - sudo chmod +w log_file
+  - sudo touch output_file
+  - sudo chmod 777 output_file
 
 script:
   - bash runtests.sh
