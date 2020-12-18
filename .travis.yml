@@ -20,6 +20,7 @@ install:
 
 before_script:
   - sudo touch log_file
+  - sudo chmod +w log_file
 
 script:
   - bash runtests.sh
