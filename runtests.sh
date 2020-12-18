@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # Run app in the background
-python app.py &
+python ./twa_app/app.py &
 p1_pid=$!
 
 
 # Running tests on Chrome
 
 echo Running tests on Chrome
-python tests.py chrome
+python tests.py
 ret=$?
 
 # Check if tests fails or passes
