@@ -26,7 +26,7 @@ class CommonMethods():
     def get_options(self):
         options = Options()
         options.add_experimental_option('w3c', False)
-        # options.add_argument('-headless')
+        options.add_argument('-headless')
         return options
     
     def get_exeptions(self):
