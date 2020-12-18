@@ -53,3 +53,8 @@ class CommonMethods():
         wait = WebDriverWait(driver, 20, ignored_exceptions=self.get_exeptions())
         element = wait.until(EC.element_to_be_clickable(attr))
         return element
+
+    def get_table(self, attr, driver):
+        wait = WebDriverWait(driver, 20, ignored_exceptions=self.get_exeptions())
+        chart = wait.until(EC.visibility_of_element_located(attr))
+        return chart

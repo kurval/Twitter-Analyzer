@@ -11,14 +11,32 @@ class TwaTests(unittest.TestCase):
     def setUp(self):
         self.driver = self.cm.get_driver()
 
-    def test_login(self):
-        login_btn = self.cm.get_click_element((By.ID, 'lg-ano'), self.driver)
+    def login_ano(self):
+        login_btn = self.cm.get_click_element((By.ID, 'tw-ano'), self.driver)
         login_btn.click()
-        time.sleep(3)
+
+    def test_logout(self):
+        self.login_ano()
+        back_btn = self.cm.get_element((By.ID, 'tw-back'), self.driver)
+        back_btn.click()
+        alert = self.cm.get_element((By.ID, 'tw-alert'), self.driver)
+        self.assertEqual("Goodbye stranger!", alert.text)
+
+    def test_search_page(self):
+        self.login_ano()
         alert = self.cm.get_element((By.ID, 'tw-alert'), self.driver)
         self.assertEqual("Hello stranger! Go ahead and run your first Twitter search or use Random search.", alert.text)
         search = self.cm.get_element((By.ID, 'tw-search'), self.driver)
         self.assertEqual("Twitter search", search.text)
-    
+
+    def test_random_search(self):
+        self.login_ano()
+        random_btn = self.cm.get_click_element((By.ID, 'tw-random'), self.driver)
+        random_btn.click()
+        badge = self.cm.get_element((By.ID, 'tw-badge-neg'), self.driver)
+        self.assertEqual("Negative", badge.text)
+        results = self.cm.get_table((By.ID, 'tw-results'), self.driver)
+        self.assertTrue(results.is_displayed())
+
     def tearDown(self):
         self.driver.close()

@@ -30,10 +30,10 @@
                     <button type="submit" name="r" value="random" class="btn btn-success mb-2 ml-2" onclick="loading();"><i class="fa fa-star"></i> Random</button>
                 </form>
             </div>
-            <span class="badge badge-danger even-larger-badge">Negative</span>
+            <span id="tw-badge-neg" class="badge badge-danger even-larger-badge">Negative</span>
             <span class="badge badge-success even-larger-badge">Positive</span>
             <span class="badge badge-info even-larger-badge">Neutral</span>
-            <ul class="list-group results">
+            <ul id="tw-results" class="list-group results">
 
                 {% set css_class = 'list-group-item-info' %}
 

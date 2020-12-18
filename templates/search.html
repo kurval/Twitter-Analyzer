@@ -9,7 +9,7 @@
     <li class="breadcrumb-item active" aria-current="page">Search</li>
 {% endblock %}
 {% block content %}
-    <a href="{{ url_for('logout') }}">
+    <a id="tw-back" href="{{ url_for('logout') }}">
         <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" fill="currentColor" class="bi bi-arrow-left-circle my-4 ml-4" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
             <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
@@ -25,7 +25,7 @@
                     <input class="form-control" type="text" name="q" id="q" placeholder="Your Twitter search">
                 </div>
                 <button type="submit" class="btn btn-primary mb-2" onclick="loading();">Search</button>
-                <button type="submit" name="r" value="random" class="btn btn-success mb-2 ml-2" onclick="loading();"><i class="fa fa-star"></i> Random</button>
+                <button id="tw-random" type="submit" name="r" value="random" class="btn btn-success mb-2 ml-2" onclick="loading();"><i class="fa fa-star"></i> Random</button>
             </form>
         </div>
         <table class="table table-striped">
