@@ -14,7 +14,7 @@
     <div id="loading"></div>
     <div class="hide-content">
       {% for category, message in get_flashed_messages(with_categories=True) %}
-          <div class="alert alert-{{category}} hide-content" role="alert">{{ message }}</div>
+          <div id="tw-alert" class="alert alert-{{category}} hide-content" role="alert">{{ message }}</div>
       {% endfor %}
       <div id="navigation">
         <nav class="navbar sticky-top navbar-light" style="background-color: #e3f2fd;">

@@ -2,7 +2,6 @@ from flask import Flask, render_template, session, redirect, request, url_for, g
 import error_handlers
 from database import Database
 from user import User
-import ssl
 from twitter_auth import get_request_token,get_oauth_verifier_url, get_access_token
 from twitter_utils import get_tweets_by_user,\
                             get_tweets_by_app,\
@@ -93,6 +92,4 @@ def results():
     return render_template('result.html', tw_list=tweet_list, user=user, query=query)
 
 if __name__ == '__main__':
-    context = ssl.SSLContext()
-    context.load_cert_chain('cert.pem', 'key.pem')
-    app.run(port=4995, debug=True, ssl_context=context)
+    app.run(port=4995, debug=True)
