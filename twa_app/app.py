@@ -15,7 +15,7 @@ app.register_blueprint(error_handlers.blueprint)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = '1234'
 
-Database.initialise(database="learning", host="localhost", user="postgres", password="filsu90")
+#Database.initialise(database="learning", host="localhost", user="postgres", password="filsu90")
 
 @app.before_request
 def load_user():
