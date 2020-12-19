@@ -1,5 +1,9 @@
-import twa_app.app as twa_app
 import unittest
+import os
+import sys
+topdir = os.path.join(os.path.dirname(__file__), "../twa_app")
+sys.path.append(topdir)
+import app as twa_app
 
 class TwaUnitTests(unittest.TestCase):
 
