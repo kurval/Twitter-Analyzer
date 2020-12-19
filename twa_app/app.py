@@ -1,10 +1,10 @@
 from flask import Flask, render_template, session, redirect, request, url_for, g, flash, abort
-import twa_app.error_handlers as error_handlers
-from twa_app.database import Database
-from twa_app.user import User
+import error_handlers
+from database import Database
+from user import User
 import sys
-from twa_app.twitter_auth import get_request_token,get_oauth_verifier_url, get_access_token
-from twa_app.twitter_utils import get_tweets_by_user,\
+from twitter_auth import get_request_token,get_oauth_verifier_url, get_access_token
+from twitter_utils import get_tweets_by_user,\
                             get_tweets_by_app,\
                             parse_tweets,\
                             analyze_tweets,\

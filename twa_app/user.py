@@ -1,7 +1,7 @@
 import psycopg2
-from twa_app.database import CursorFromConnectionFromPool
+from database import CursorFromConnectionFromPool
 import oauth2
-from twa_app.twitter_auth import consumer
+from twitter_auth import consumer
 import json
 from flask import abort
 

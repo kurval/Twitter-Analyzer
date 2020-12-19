@@ -1,5 +1,5 @@
 import oauth2
-import twa_app.constants as constants
+import constants
 from flask import abort
 import urllib.parse as urlparse
 
