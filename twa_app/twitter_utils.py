@@ -1,4 +1,4 @@
-import constants
+import twa_app.constants as constants
 import requests
 import json
 import urllib.parse as urlparse
