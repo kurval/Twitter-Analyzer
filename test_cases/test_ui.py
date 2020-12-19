@@ -43,7 +43,7 @@ class TwaUiTests(unittest.TestCase):
         search_btn.click()
         input_field = self.cm.get_element((By.ID, 'q'), self.driver)
 
-        search_text = "apple"
+        search_text = "@NASA"
         input_field.send_keys(search_text)
         input_field.send_keys(Keys.RETURN)
         results = self.cm.get_table((By.ID, 'tw-results'), self.driver).text

@@ -77,11 +77,11 @@ def results():
     query = request.args.get('q')
     if r == "random":
         query = get_random_word()
-    elif len(query) > 500:
-        flash("Search query is too long (max 500 characters). Try another one.", "warning")
-        return redirect(url_for('search'))
     elif not query:
         flash("Empty search. See the table above of how to use search operators or use random search.", "warning")
+        return redirect(url_for('search'))
+    elif len(query) > 500:
+        flash("Search query is too long (max 500 characters). Try another one.", "warning")
         return redirect(url_for('search'))
 
     encoded_query = encode_query(query)
