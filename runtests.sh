@@ -5,12 +5,12 @@ python ./twa_app/app.py -test > output_file 2>&1 &
 p1=$!
 
 # Running unittests
-echo Running Unit tests on
+echo ****UNIT TESTS****
 python -m unittest tests.TwaUnitTests
 ret1=$?
 
 # Running UI tests on Chrome
-echo Running UI tests on Chrome
+echo ****UI TESTS ON CHROME****
 python -m unittest tests.TwaUiTests
 ret2=$?
 
