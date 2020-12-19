@@ -11,7 +11,9 @@
     {% endblock %}
   </head>
   <body>
-    <div id="loading"></div>
+    <div id="loading" class="text-center">
+      <p class="my-3"><strong>Analyzing Tweets</strong></p>
+    </div>
     <div class="hide-content">
       {% for category, message in get_flashed_messages(with_categories=True) %}
           <div id="tw-alert" class="alert alert-{{category}} hide-content" role="alert">{{ message }}</div>
