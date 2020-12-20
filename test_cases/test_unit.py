@@ -56,3 +56,8 @@ class TwaUnitTests(unittest.TestCase):
         tweets = get_tweets_by_app("test")
         tweets = parse_tweets(tweets)
         self.assertTrue(tweets[0]['tweet'])
+
+    def test_not_found(self):
+        res = self.app.get('/searc')
+        self.assertTrue(res.status_code == 200)
+        self.assertIn("We couldn't find the page you were looking for. Please check your spelling and try again.", res.get_data(as_text=True))

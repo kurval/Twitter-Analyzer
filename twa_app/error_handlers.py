@@ -12,4 +12,4 @@ def forbidden(e):
 
 @blueprint.app_errorhandler(404)
 def not_found(e):
-    return render_template('error_not_found.html', error=e)
+    return render_template('error_not_found.html')
