@@ -68,7 +68,7 @@ def homepage():
 def search():
     if 'quest' not in session and 'screen_name' not in session:
         session['quest'] = 'anonymous'
-        flash("Hello stranger! Go ahead and run your first Twitter search or use Random search.", "success")
+        flash("Hello stranger! Go ahead and run your first Twitter search or use random search.", "success")
 
     if 'screen_name' in session:
         return render_template('search.html', user=g.user)
