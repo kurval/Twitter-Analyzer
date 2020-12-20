@@ -3,6 +3,7 @@ import error_handlers
 from database import Database
 from user import User
 import sys
+import os
 from twitter_auth import get_request_token,get_oauth_verifier_url, get_access_token
 from twitter_utils import get_tweets_by_user,\
                             get_tweets_by_app,\
@@ -14,7 +15,7 @@ from twitter_utils import get_tweets_by_user,\
 app = Flask(__name__)
 app.register_blueprint(error_handlers.blueprint)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.secret_key = '1234'
+app.secret_key = os.environ.get('SECRET_KEY', 'dev')
 
 def init_database():
     Database.initialise(database="learning", host="localhost", user="postgres", password="filsu90")
