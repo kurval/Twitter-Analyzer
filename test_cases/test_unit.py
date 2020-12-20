@@ -35,9 +35,13 @@ class TwaUnitTests(unittest.TestCase):
         res = self.app.get('/results')
         self.assertTrue(res.status_code == 302)
 
+    def test_auth(self):
+        res = self.app.get('/results')
+        self.assertTrue(res.status_code == 302)
+
     def test_get_random_word(self):
         random_word = get_random_word()
-        self.assertTrue(len(random_word) > 0)
+        self.assertTrue(random_word)
 
     def test_analyze_tweets(self):
         tweet_list = [{'tweet':"Analyze this tweet for unit testing"}]
@@ -46,5 +50,9 @@ class TwaUnitTests(unittest.TestCase):
 
     def test_get_tweets(self):
         tweets = get_tweets_by_app("test")
+        self.assertTrue(tweets)
+
+    def test_parse_tweets(self):
+        tweets = get_tweets_by_app("test")
         tweets = parse_tweets(tweets)
-        self.assertTrue(len(tweets[0]['tweet']) > 0)
+        self.assertTrue(tweets[0]['tweet'])
