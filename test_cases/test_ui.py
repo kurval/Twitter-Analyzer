@@ -24,7 +24,7 @@ class TwaUiTests(unittest.TestCase):
     def test_search_page(self):
         self.login_ano()
         alert = self.cm.get_element((By.ID, 'tw-alert'), self.driver)
-        self.assertEqual("Hello stranger! Go ahead and run your first Twitter search or use Random search.", alert.text)
+        self.assertEqual("Hello stranger! Go ahead and run your first Twitter search or use random search.", alert.text)
         search = self.cm.get_element((By.ID, 'tw-search-text'), self.driver)
         self.assertEqual("Twitter search", search.text)
 
