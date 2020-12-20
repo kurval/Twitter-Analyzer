@@ -1,4 +1,4 @@
-import constants as constants
+import settings as settings
 import requests
 import json
 import urllib.parse as urlparse
@@ -11,12 +11,12 @@ def encode_query(query):
     return urlparse.quote_plus(query)
 
 def get_tweets_by_user(user, query):
-    return user.twitter_request(f"{constants.SEARCH_URL}?q={query}")
+    return user.twitter_request(f"{settings.SEARCH_URL}?q={query}")
 
 def get_tweets_by_app(query):
     headers = {
-        "Authorization": "Bearer " + constants.BEARER}
-    content = requests.get(f"{constants.SEARCH_URL}?q={query}", headers=headers)
+        "Authorization": "Bearer " + settings.BEARER}
+    content = requests.get(f"{settings.SEARCH_URL}?q={query}", headers=headers)
     if content.status_code != 200:
         abort(400)
     return json.loads(content.text)
