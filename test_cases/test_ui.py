@@ -2,6 +2,8 @@ import unittest
 from test_cases.common import CommonMethods
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+import random
+import string
 import time
 
 class TwaUiTests(unittest.TestCase):
@@ -48,6 +50,20 @@ class TwaUiTests(unittest.TestCase):
         input_field.send_keys(Keys.RETURN)
         results = self.cm.get_table((By.ID, 'tw-results'), self.driver).text
         self.assertIn(search_text, results)
+
+    def test_search_over_max(self):
+        self.login_ano()
+        search_btn = self.cm.get_click_element((By.ID, 'tw-search'), self.driver)
+        search_btn.click()
+        input_field = self.cm.get_element((By.ID, 'q'), self.driver)
+
+        letters = string.ascii_lowercase
+        search_text = ''.join(random.choice(letters) for i in range(101))
+        input_field.send_keys(search_text)
+        input_field.send_keys(Keys.RETURN)
+
+        alert = self.cm.get_element((By.ID, 'tw-alert'), self.driver)
+        self.assertEqual("Wow! Your query is way too long (max 100 characters). Try another one.", alert.text)
 
     def tearDown(self):
         self.driver.close()
