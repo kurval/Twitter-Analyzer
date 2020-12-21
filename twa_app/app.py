@@ -17,14 +17,14 @@ from twitter_utils import get_tweets_by_user,\
 app = Flask(__name__)
 app.register_blueprint(error_handlers.blueprint)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-
 app.secret_key = os.environ.get('SECRET_KEY', 'dev')
+
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 def init_database():
-    Database.initialise(database="Twa", host="localhost", user="Valtteri", password=settings.DB_KEY)
+    Database.initialise(database="Twa", host="localhost", user="Valtteri", password="Geisha-900")
 
 @app.before_request
 def load_user():
@@ -58,8 +58,8 @@ def twitter_auth():
 
     user = User.load_data(access_token['screen_name'])
     if not user:
-        user = User(acces_token['screen_name'], acces_token['oauth_token'],
-                    acces_token['oauth_token_secret'], None)
+        user = User(access_token['screen_name'], access_token['oauth_token'],
+                    access_token['oauth_token_secret'], None)
         user.save_to_db()
 
     session['screen_name'] = user.screen_name

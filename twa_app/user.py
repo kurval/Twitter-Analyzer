@@ -15,7 +15,7 @@ class User:
     def __repr__(self):
         return f"<User {self.screen_name}>"
 
-    def save_to_db(self, access_token):
+    def save_to_db(self):
         with CursorFromConnectionFromPool() as cursor:
             cursor.execute('INSERT INTO users (screen_name, oauth_token, oauth_token_secret) VALUES (%s, %s, %s)',
                             (self.screen_name, self.oauth_token, self.oauth_token_secret))
