@@ -1,1 +1,1 @@
-web: gunicorn twa_app.app:app
+web: gunicorn --chdir twa_app app:app
