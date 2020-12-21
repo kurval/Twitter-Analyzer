@@ -5,6 +5,7 @@ from user import User
 import sys
 import os
 import settings
+from flask_sqlalchemy import SQLAlchemy
 from twitter_auth import get_request_token,get_oauth_verifier_url, get_access_token
 from twitter_utils import get_tweets_by_user,\
                             get_tweets_by_app,\
@@ -16,10 +17,16 @@ from twitter_utils import get_tweets_by_user,\
 app = Flask(__name__)
 app.register_blueprint(error_handlers.blueprint)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+
 app.secret_key = os.environ.get('SECRET_KEY', 'dev')
+app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+from models import Usertable
 
 def init_database():
-    Database.initialise(database="learning", host="localhost", user="postgres", password=settings.DB_KEY)
+    Database.initialise(database="Twa", host="localhost", user="Valtteri", password=settings.DB_KEY)
 
 @app.before_request
 def load_user():
