@@ -26,6 +26,7 @@ db = SQLAlchemy(app)
 from models import Usertable
 
 def init_database():
+    #Database.initialise(database="learning", host="localhost", user="postgres", password="filsu90")
     Database.initialise(database="Twa", host="localhost", user="Valtteri", password="Geisha-900")
 
 @app.before_request
