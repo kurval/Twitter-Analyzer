@@ -23,6 +23,8 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+from models import Usertable
+
 def init_database():
     Database.initialise(database="Twa", host="localhost", user="Valtteri", password="Geisha-900")
 
