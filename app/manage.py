@@ -1,11 +1,15 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 import os
+import sys
 
 from app import app, db
 
-MIGRATION_DIR = os.path.join('/Users/valtterikurkela/twitter_app/app', 'migrations')
-
+if len(sys.argv) > 3:
+    MIGRATION_DIR = os.path.join('app', 'migrations')
+else:
+    MIGRATION_DIR = None
+    
 migrate = Migrate(app, db, directory=MIGRATION_DIR)
 manager = Manager(app)
 
