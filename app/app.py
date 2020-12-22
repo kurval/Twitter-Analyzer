@@ -1,6 +1,7 @@
 from flask import Flask, render_template, session, redirect, request, url_for, g, flash, abort
 import error_handlers
 from database import Database
+import urllib.parse as urlparse
 from user import User
 import sys
 import os
@@ -25,8 +26,15 @@ db = SQLAlchemy(app)
 
 from models import Usertable
 
+url = urlparse.urlparse(os.environ['DATABASE_URL'])
+dbname = url.path[1:]
+user = url.username
+password = url.password
+host = url.hostname
+port = url.port
+
 #Database.initialise(database="learning", host="localhost", user="postgres", password="filsu90")
-Database.initialise(database="Twa", host="localhost", user="Valtteri", password="Geisha-900")
+Database.initialise(database=dbname, host=host, port=port, user=user, password=password)
 
 @app.before_request
 def load_user():
