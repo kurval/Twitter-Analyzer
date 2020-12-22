@@ -115,4 +115,4 @@ def results():
     return render_template('result.html', tw_list=tweet_list, user=user, query=query)
 
 if __name__ == '__main__':
-    app.run(port=4995, debug=True)
+    app.run()
