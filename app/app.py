@@ -20,21 +20,21 @@ app.register_blueprint(error_handlers.blueprint)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = os.environ.get('SECRET_KEY', 'dev')
 
-# app.config.from_object(os.environ['APP_SETTINGS'])
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# db = SQLAlchemy(app)
+app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-# from models import Usertable
+from models import Usertable
 
-# url = urlparse.urlparse(os.environ['DATABASE_URL'])
-# dbname = url.path[1:]
-# user = url.username
-# password = url.password
-# host = url.hostname
-# port = url.port
+url = urlparse.urlparse(os.environ['DATABASE_URL'])
+dbname = url.path[1:]
+user = url.username
+password = url.password
+host = url.hostname
+port = url.port
 
-Database.initialise(database="learning", host="localhost", user="postgres", password="filsu90")
-#Database.initialise(database=dbname, host=host, port=port, user=user, password=password)
+#Database.initialise(database="learning", host="localhost", user="postgres", password="filsu90")
+Database.initialise(database=dbname, host=host, port=port, user=user, password=password)
 
 @app.before_request
 def load_user():
