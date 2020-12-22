@@ -5,10 +5,10 @@ import sys
 
 from app import app, db
 
-if len(sys.argv) > 3:
-    MIGRATION_DIR = os.path.join('app', 'migrations')
-else:
+if len(sys.argv) == 3:
     MIGRATION_DIR = None
+else:
+    MIGRATION_DIR = os.path.join('app', 'migrations')
     
 migrate = Migrate(app, db, directory=MIGRATION_DIR)
 manager = Manager(app)
