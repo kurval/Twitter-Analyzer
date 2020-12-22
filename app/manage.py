@@ -4,9 +4,9 @@ import os
 
 from app import app, db
 
-MIGRATION_DIR = os.path.join('/Users/valtterikurkela/twitter_app/twa_app', 'migrations')
+MIGRATION_DIR = os.path.join('/Users/valtterikurkela/twitter_app/app', 'migrations')
 
-migrate = Migrate(app, db)
+migrate = Migrate(app, db, directory=MIGRATION_DIR)
 manager = Manager(app)
 
 manager.add_command('db', MigrateCommand)
