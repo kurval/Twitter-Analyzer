@@ -1,12 +1,9 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-import os
 
 from app import app, db
 
-MIGRATION_DIR = os.path.join('twa_app', 'migrations')
-
-migrate = Migrate(app, db, directory=MIGRATION_DIR)
+migrate = Migrate(app, db)
 manager = Manager(app)
 
 manager.add_command('db', MigrateCommand)

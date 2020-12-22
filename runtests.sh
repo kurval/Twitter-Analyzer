@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Run app in the background
-python ./twa_app/app.py -test > output_file 2>&1 &
+python ./app/app.py -test > output_file 2>&1 &
 p1=$!
 
 # Running unittests
