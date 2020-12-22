@@ -25,9 +25,8 @@ db = SQLAlchemy(app)
 
 from models import Usertable
 
-def init_database():
-    #Database.initialise(database="learning", host="localhost", user="postgres", password="filsu90")
-    Database.initialise(database="Twa", host="localhost", user="Valtteri", password="Geisha-900")
+#Database.initialise(database="learning", host="localhost", user="postgres", password="filsu90")
+Database.initialise(database="Twa", host="localhost", user="Valtteri", password="Geisha-900")
 
 @app.before_request
 def load_user():
@@ -55,7 +54,7 @@ def twitter_login():
 @app.route("/auth/twitter")
 def twitter_auth():
     oauth_verifier = request.args.get('oauth_verifier')
-    if not oauth_verifier:
+    if not oauth_verifier or 'request_token' not in session:
         abort(401)
     access_token = get_access_token(session['request_token'], oauth_verifier)
 
@@ -109,6 +108,4 @@ def results():
     return render_template('result.html', tw_list=tweet_list, user=user, query=query)
 
 if __name__ == '__main__':
-    if len(sys.argv) == 1:
-        init_database()
     app.run(port=4995, debug=True)
