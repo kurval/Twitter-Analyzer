@@ -60,7 +60,7 @@ def twitter_login():
 @app.route("/auth/twitter")
 def twitter_auth():
     oauth_verifier = request.args.get('oauth_verifier')
-    if not oauth_verifier or 'request_token' not in session:
+    if not oauth_verifier:
         abort(401)
     access_token = get_access_token(session['request_token'], oauth_verifier)
 
