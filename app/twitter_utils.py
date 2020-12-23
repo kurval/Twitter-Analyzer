@@ -4,6 +4,7 @@ import json
 import urllib.parse as urlparse
 from flask import abort
 import random
+import os
 
 def encode_query(query):
     if query[0] == '@':
@@ -15,7 +16,7 @@ def get_tweets_by_user(user, query):
 
 def get_tweets_by_app(query):
     headers = {
-        "Authorization": "Bearer " + BEARER_TOKEN}
+        "Authorization": "Bearer " + os.environ['BEARER_TOKEN']}
     content = requests.get(f"{settings.SEARCH_URL}?q={query}", headers=headers)
     if content.status_code != 200:
         abort(400)
