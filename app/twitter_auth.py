@@ -3,7 +3,7 @@ import settings
 from flask import abort
 import urllib.parse as urlparse
 
-consumer = oauth2.Consumer(settings.CONSUMER_KEY, settings.CONSUMER_SECRET)
+consumer = oauth2.Consumer(CONSUMER_KEY, CONSUMER_SECRET)
 
 def get_request_token():
     '''

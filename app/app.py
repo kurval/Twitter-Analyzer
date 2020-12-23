@@ -5,7 +5,6 @@ import urllib.parse as urlparse
 from user import User
 import sys
 import os
-import settings
 from flask_sqlalchemy import SQLAlchemy
 from twitter_auth import get_request_token,get_oauth_verifier_url, get_access_token
 from twitter_utils import get_tweets_by_user,\

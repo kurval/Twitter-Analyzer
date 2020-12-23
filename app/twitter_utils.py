@@ -15,7 +15,7 @@ def get_tweets_by_user(user, query):
 
 def get_tweets_by_app(query):
     headers = {
-        "Authorization": "Bearer " + settings.BEARER}
+        "Authorization": "Bearer " + BEARER_TOKEN}
     content = requests.get(f"{settings.SEARCH_URL}?q={query}", headers=headers)
     if content.status_code != 200:
         abort(400)
