@@ -14,7 +14,7 @@ import warnings
 class CommonMethods():
     # Default browser
     BROWSER = "chrome"
-    START_URL = "http://127.0.0.1:4995/"
+    START_URL = "http://127.0.0.1:5000/"
     
     def get_driver(self):
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
