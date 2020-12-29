@@ -1,17 +1,17 @@
 #!/bin/bash
 
 # Run app in the background
-python ./twa_app/app.py -test > output_file 2>&1 &
+python ./twa_app/app.py > output_file 2>&1 &
 p1=$!
 
 # Running unittests
 echo ****UNIT TESTS****
-python -m unittest tests.TwaUnitTests
+python -m unittest tests_twa.TwaUnitTests
 ret1=$?
 
 # Running UI tests on Chrome
 echo ****UI TESTS ON CHROME****
-python -m unittest tests.TwaUiTests
+python -m unittest tests_twa.TwaUiTests
 ret2=$?
 
 # Check if tests fails or passes
