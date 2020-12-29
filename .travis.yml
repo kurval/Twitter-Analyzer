@@ -23,7 +23,7 @@ install:
   - sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 
 before_script:
-  - python manage.py db upgrade
+  - python ./twa_app/manage.py db upgrade
   - sudo touch output_file
   - sudo chmod 777 output_file
 
