@@ -1,5 +1,5 @@
 import unittest
-from tests.common import CommonMethods
+from tests.ui_tests.common import CommonMethods
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 import random

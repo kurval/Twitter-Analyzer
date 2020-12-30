@@ -1,7 +1,7 @@
 import unittest
 import os
 import sys
-topdir = os.path.join(os.path.dirname(__file__), "../twa_app")
+topdir = os.path.join(os.path.dirname(__file__), "../../twa_app")
 sys.path.append(topdir)
 import app as twa_app
 from twitter_utils import get_random_word, analyze_tweets, get_tweets_by_app, parse_tweets
