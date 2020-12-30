@@ -6,12 +6,12 @@ p1=$!
 
 # Running unittests
 echo ****UNIT TESTS****
-python -m unittest tests_twa.TwaUnitTests
+python -m unittest discover -s tests/unit_tests
 ret1=$?
 
 # Running UI tests on Chrome
 echo ****UI TESTS ON CHROME****
-python -m unittest tests_twa.TwaUiTests
+python -m unittest discover -s tests/ui_tests
 ret2=$?
 
 # Check if tests fails or passes
